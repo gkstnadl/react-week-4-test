@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FormStyle = styled.form`
   max-width: 600px;
-  margin: 60px auto;
+  margin: 50px auto;
   border: 1px solid #f2f2f2;
   border-radius: 5px;
   padding: 30px 40px;

@@ -1,64 +1,36 @@
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import {
+  SignupBackgroundStyle,
+  SignupBoxStyle,
+  LoginLinkStyle,
+} from "../SignupForm/styles";
+import LogoImg from "../../../assets/bts-logo.png";
+import { LogoImgStyle } from "../Header/styles";
 
 function Login() {
-  // const email = useUserForm("");
-  // const password = useUserForm("");
-  // const dispatch = useDispatch();
-
-  // const signIn = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const userCredential = await signInWithEmailAndPassword(
-  //       auth,
-  //       email.value,
-  //       password.value
-  //     );
-  //     console.log(userCredential);
-  //     dispatch(setUser(userCredential.user));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // const logOut = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     await signOut(auth);
-  //     dispatch(clearUser());
-  //     console.log("로그아웃 완료");
-  //   } catch (error) {
-  //     console.error("로그아웃 에러", error);
-  //   }
-  // };
-
   return (
-    <div>
-      <h2>로그인 페이지</h2>
-      {/* <form onSubmit={signIn}>
-        <div>
-          <label>이메일 : </label>
-          <input
-            type="email"
-            value={email.value}
-            onChange={email.onChange}
-            required
-          />
-        </div>
-        <div>
-          <label>비밀번호 : </label>
-          <input
-            type="password"
-            value={password.value}
-            onChange={password.onChange}
-            required
-          />
-        </div>
-        <Link to="/signup">회원가입하기</Link>
-        <button type="submit">로그인</button>
-        <button onClick={logOut}>로그아웃</button>
-      </form> */}
-    </div>
+    <SignupBackgroundStyle>
+      <LogoImgStyle src={LogoImg} alt="bts-logo" />
+      <SignupBoxStyle>
+        <h2>로그인</h2>
+        <form>
+          <div>
+            <input
+              type="email"
+              id="email"
+              placeholder="이메일"
+              required
+            ></input>
+          </div>
+          <div>
+            <input type="password" placeholder="비밀번호" required></input>
+          </div>
+          <button type="submit">로그인</button>
+          <p>아이디가 없다면?</p>
+          <LoginLinkStyle to="/signup">회원가입</LoginLinkStyle>
+        </form>
+      </SignupBoxStyle>
+    </SignupBackgroundStyle>
   );
 }
 

@@ -6,15 +6,13 @@ import memberRm from "../../../assets/member-image/member-rm.jpg";
 import memberSuga from "../../../assets/member-image/member-suga.jpg";
 import memberV from "../../../assets/member-image/member-v.jpg";
 import { MemberBtnStyle } from "./styles";
-import "swiper/css";
-import "swiper/css/effect-flip";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-
 import { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import { EffectFlip, Pagination, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./styles.css";
+import { Pagination } from "swiper/modules";
 
 const memberImages = {
   정국: memberJk,
@@ -34,11 +32,13 @@ function MemberSlider({ onMemberClick }) {
   return (
     <>
       <Swiper
-        effect={"flip"}
-        grabCursor={true}
-        pagination={true}
-        navigation={true}
-        modules={[EffectFlip, Pagination, Navigation]}
+        slidesPerView={3}
+        spaceBetween={30}
+        centeredSlides={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination]}
         className="mySwiper"
       >
         {Object.entries(memberImages).map(([member]) => (
