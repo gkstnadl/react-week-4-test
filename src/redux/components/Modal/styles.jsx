@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 // 모달 배경 스타일
 export const ModalBackdropStyle = styled.div`
@@ -17,20 +17,24 @@ export const ModalBackdropStyle = styled.div`
 // 모달 콘텐츠 스타일
 export const ModalContentStyle = styled.div`
   background-color: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 `;
 
 // 모달 메세지 스타일
 export const ModalMessageStyle = styled.p`
   font-size: 20px;
   font-weight: 500;
-  margin: 5px 10px 10px 10px;
 `;
 // 모달 취소버튼 스타일
 export const CancelClickBtnStyle = styled.button`
@@ -51,6 +55,6 @@ export const ConfirmClickBtnStyle = styled.button`
   margin-left: 10px;
   color: white;
   &:hover {
-    background-color: #8860a5;
+    background-color: #9c7ab8;
   }
 `;

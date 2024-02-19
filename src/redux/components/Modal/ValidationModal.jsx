@@ -5,19 +5,17 @@ import {
   CancelClickBtnStyle,
   ConfirmClickBtnStyle,
 } from "./styles";
-import { ProfileIcon } from "../../../assets/ProfileIcon";
+import { useSelector } from "react-redux";
 
 // showCancelButton라는 prop을 추가해 이 prop이 true일때만 표시하도록 동작
-function ValidationModal({
-  message,
-  onConfirm,
-  onCancel,
-  showConfirmButton = true,
-}) {
+function ValidationModal({ onConfirm, onCancel, showConfirmButton = true }) {
+  const { message, showModal } = useSelector((state) => state.modal);
+
+  if (!showModal) return null;
+
   return (
     <ModalBackdropStyle>
       <ModalContentStyle>
-        <ProfileIcon />
         <ModalMessageStyle>{message}</ModalMessageStyle>
         <div>
           {showConfirmButton && (

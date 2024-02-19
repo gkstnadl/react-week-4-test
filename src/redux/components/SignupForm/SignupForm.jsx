@@ -5,15 +5,21 @@ import {
   SignupBackgroundStyle,
   SignupBoxStyle,
   LoginLinkStyle,
+  SignupFormStyle,
+  SignupBtnStyle,
 } from "./styles";
 import LogoImg from "../../../assets/bts-logo.png";
 import { LogoImgStyle } from "../Header/styles";
+import ValidationModal from "../Modal/ValidationModal";
+import { openModal, closeModal } from "../../modules/modal";
+import { useNavigate } from "react-router-dom";
 
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Redux에서 회원가입 상태 가져오기
   const { isLoading, isError, isSuccess, message } = useSelector(
@@ -23,6 +29,16 @@ function SignupForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signupUser({ nickname, id: email, password }));
+    dispatch(openModal({ message: "회원가입이 완료되었습니다." }));
+  };
+
+  const handleConfirm = () => {
+    dispatch(closeModal());
+    navigate("/login");
+  };
+
+  const handleCancel = () => {
+    dispatch(closeModal());
   };
 
   return (
@@ -30,7 +46,7 @@ function SignupForm() {
       <LogoImgStyle src={LogoImg} alt="bts-logo" />
       <SignupBoxStyle>
         <h2>회원가입</h2>
-        <form onSubmit={handleSubmit}>
+        <SignupFormStyle onSubmit={handleSubmit}>
           {isError && <p>{message}</p>}
           <div>
             <input
@@ -61,13 +77,18 @@ function SignupForm() {
               required
             ></input>
           </div>
-          <button type="submit" disabled={isLoading}>
+          <SignupBtnStyle type="submit" disabled={isLoading}>
             가입하기
-          </button>
-          <p>이미 가입한 계정이 있나요?</p>
+          </SignupBtnStyle>
+          <span>이미 가입한 계정이 있나요?</span>
           <LoginLinkStyle to="/login">로그인</LoginLinkStyle>
-          {isSuccess && <p>회원가입 성공! 로그인 페이지로 이동해주세요.</p>}
-        </form>
+          {isSuccess && (
+            <ValidationModal
+              onConfirm={handleConfirm}
+              onCancel={handleCancel}
+            />
+          )}
+        </SignupFormStyle>
       </SignupBoxStyle>
     </SignupBackgroundStyle>
   );
