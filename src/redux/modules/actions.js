@@ -5,13 +5,13 @@ import {
   SET_MODAL_VISIBILITY,
   SET_MODAL_MESSAGE
 } from './actionTypes';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from "nanoid";
 import { getRandomColor } from './getRandomColor';
 
 
 export const addFanLetter = (nickname, content, member) => {
   const newLetter = {
-    id: uuidv4(),
+    id: nanoid(),
     nickname,
     content,
     sentTime: new Date().toISOString(),

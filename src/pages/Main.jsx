@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import MemberSlider from '../components/MemberSlider';
-import InputFanLetter from '../components/InputFanLetter';
-import FanLetterList from '../components/FanLetterList';
-import { members } from '../Redux/modules/members';
+import { useState } from "react";
+import MemberSlider from "../redux/components/Member/MemberSlider";
+import InputFanLetter from "../redux/components/Input/InputFanLetter";
+import FanletterList from "../redux/components/FanletterList/FanletterList";
+import { members } from "../redux/modules/members";
 
 function Main() {
   //현재 선택된 멤버 상태 관리
@@ -17,7 +17,7 @@ function Main() {
     <>
       <MemberSlider members={members} onMemberClick={handleMemberClick} />
       <InputFanLetter />
-      <FanLetterList selectedMember={selectedMember} />
+      <FanletterList selectedMember={selectedMember} />
     </>
   );
 }

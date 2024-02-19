@@ -1,16 +1,9 @@
-import styled from 'styled-components';
-import Slider from 'react-slick';
+import styled from "styled-components";
 
 export const SliderContainerStyle = styled.div`
-  max-width: 600px;
+  /* max-width: 600px;
   height: auto;
-  margin: auto;
-`;
-
-export const MemberButtonsStyle = styled.div`
-  /* max-width: 1200px;
-    display: flex;
-    justify-content: center; */
+  margin: auto; */
 `;
 
 export const MemberBtnStyle = styled.button`
@@ -32,12 +25,5 @@ export const MemberBtnStyle = styled.button`
     &:hover {
       filter: brightness(100%);
     }
-  }
-`;
-
-export const SliderStyle = styled(Slider)`
-  .slick-slide {
-    display: flex;
-    justify-content: center;
   }
 `;

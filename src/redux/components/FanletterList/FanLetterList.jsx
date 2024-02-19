@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
@@ -12,7 +12,7 @@ import {
 } from "./styles";
 import { ProfileIcon } from "../../../assets/ProfileIcon";
 
-function FanLetterList({ selectedMember }) {
+function FanletterList({ selectedMember }) {
   const fanLetters = useSelector((state) => state.fanLetters);
   const navigate = useNavigate();
   const { memberName } = useParams(); // URL에서 멤버 이름을 받음
@@ -57,4 +57,4 @@ function FanLetterList({ selectedMember }) {
   );
 }
 
-export default FanLetterList;
+export default FanletterList;

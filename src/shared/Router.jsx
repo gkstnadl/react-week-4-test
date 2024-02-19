@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Main from "../pages/Main";
 import Detail from "../pages/Detail";
 import Login from "../redux/components/Login/Login";
-import SignUp from "../redux/components/SignUp/SignUp";
-import FanLetterList from "../redux/components/FanLetterList";
+import SignupForm from "../redux/components/SignupForm/SignupForm";
+import FanletterList from "../redux/components/FanletterList/FanletterList";
 import Header from "../redux/components/Header/Header";
 
 //BrowserRouter를 Router로 감싸는 이유는,
@@ -13,7 +13,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignupForm />} />
         <Route
           path="/"
           element={
@@ -37,7 +37,7 @@ const Router = () => {
           element={
             <>
               <Header />
-              <FanLetterList />
+              <FanletterList />
             </>
           }
         />

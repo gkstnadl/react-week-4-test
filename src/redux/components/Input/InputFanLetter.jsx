@@ -11,14 +11,14 @@ import {
   SubmitBtnStyle,
   ButtonContainer,
 } from "./styles";
-import ValidationModal from "./ValidationModal";
+import ValidationModal from "../Modal/ValidationModal";
 import {
   addFanLetter,
   setModalVisibility,
   setModalMessage,
-} from "../Redux/modules/actions"; // Redux 액션 가져오기
-import { members } from "../Redux/modules/members"; // 멤버 목록 가져오기
-import { MailIcon } from "assets/MailIcon";
+} from "../../modules/actions"; // Redux 액션 가져오기
+import { members } from "../../modules/members"; // 멤버 목록 가져오기
+import { MailIcon } from "../../../assets/MailIcon";
 
 function InputFanLetter() {
   const dispatch = useDispatch();

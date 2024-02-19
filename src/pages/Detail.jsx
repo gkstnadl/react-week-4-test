@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import FanLetterEditDelete from '../components/FanLetterEditDelete';
-import { updateFanLetter, deleteFanLetter } from '../Redux/modules/actions';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import FanLetterEditDelete from "../redux/components/FanletterDetail/FanLetterEditDelete";
+import { updateFanLetter, deleteFanLetter } from "../redux/modules/actions";
 
 function Detail() {
   const { id } = useParams();
@@ -27,7 +27,7 @@ function Detail() {
 
   const handleDeleteFanLetter = (id) => {
     dispatch(deleteFanLetter(id));
-    navigate('/');
+    navigate("/");
   };
 
   if (!letter) {
