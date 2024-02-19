@@ -12,3 +12,14 @@ export const register = async (userData) => {
         throw error.response.data;
     }
 };
+
+// 로그인 API
+export const login = async (loginData) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/login`, loginData);
+        return response.data;
+    } catch (error) {
+        console.error(error.response);
+        throw error.response.data;
+    }
+};

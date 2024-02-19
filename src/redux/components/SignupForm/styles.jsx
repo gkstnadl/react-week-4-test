@@ -24,7 +24,7 @@ export const SignupBoxStyle = styled.div`
   opacity: 0.9;
 
   h2 {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 20px;
   }
 `;

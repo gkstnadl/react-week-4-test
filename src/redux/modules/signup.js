@@ -1,6 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { register } from '../../api';
 
+const initialState = {
+  user: null,
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: '',
+};
+
 // 비동기 회원가입 thunk
 export const signupUser = createAsyncThunk(
   'users/signup',
@@ -13,16 +21,11 @@ export const signupUser = createAsyncThunk(
   }
 );
 
+
 // 회원가입
 export const signupSlice = createSlice({
   name: 'signup',
-  initialState: {
-    user: null,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: '',
-  },
+  initialState,
   reducers: {
     reset: (state) => {
       state.isLoading = false;

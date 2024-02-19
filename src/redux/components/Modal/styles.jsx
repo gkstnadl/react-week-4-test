@@ -42,6 +42,7 @@ export const CancelClickBtnStyle = styled.button`
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 10px 40px;
+  margin-right: 10px;
   &:hover {
     background-color: #d8d8d8;
   }
@@ -52,7 +53,6 @@ export const ConfirmClickBtnStyle = styled.button`
   border-radius: 5px;
   background-color: #ac87c5;
   padding: 10px 40px;
-  margin-left: 10px;
   color: white;
   &:hover {
     background-color: #9c7ab8;

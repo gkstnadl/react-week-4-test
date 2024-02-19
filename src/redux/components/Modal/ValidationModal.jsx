@@ -7,7 +7,6 @@ import {
 } from "./styles";
 import { useSelector } from "react-redux";
 
-// showCancelButton라는 prop을 추가해 이 prop이 true일때만 표시하도록 동작
 function ValidationModal({ onConfirm, onCancel, showConfirmButton = true }) {
   const { message, showModal } = useSelector((state) => state.modal);
 
