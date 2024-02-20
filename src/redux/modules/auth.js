@@ -29,7 +29,6 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        // 여기에 필요한 추가 리듀서를 정의할 수 있습니다.
         logout: (state) => {
             localStorage.removeItem('user');
             state.user = null;
@@ -41,7 +40,6 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // loginUser async thunk의 처리 결과에 따른 상태 업데이트 로직을 추가합니다.
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
             })
@@ -53,6 +51,7 @@ const authSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
+                state.isSuccess = false;
                 state.message = action.payload.message;
                 state.user = null;
             });

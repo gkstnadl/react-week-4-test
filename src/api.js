@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// 환경 변수로 설정시 오류가 발생
 const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
 
 // 회원가입 API

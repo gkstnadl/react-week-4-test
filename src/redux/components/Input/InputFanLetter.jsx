@@ -12,32 +12,44 @@ import {
   ButtonContainer,
 } from "./styles";
 import ValidationModal from "../Modal/ValidationModal";
-import {
-  addFanLetter,
-  setModalVisibility,
-  setModalMessage,
-} from "../../modules/actions"; // Redux 액션 가져오기
+import { addFanLetter } from "../../modules/fanletter"; // Redux 액션 가져오기
+import { openModal, closeModal } from "../../../redux/modules/modal";
 import { members } from "../../modules/members"; // 멤버 목록 가져오기
 import { MailIcon } from "../../../assets/MailIcon";
 
 function InputFanLetter() {
   const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.showModal); // 모달 상태 선택
-  const modalMessage = useSelector((state) => state.modalMessage); // 모달 메시지 선택
-
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
+  const { showModal, message } = useSelector((state) => state.modal);
+  const { user } = useSelector((state) => state.auth);
   const [selectedMember, setSelectedMember] = useState(members[0]);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (user && user.nickname) {
+      setNickname(user.nickname);
+    }
+    if (inputRef.current) {
+      inputRef.current.focus(); // 컴포넌트가 마운트될 때 입력창에 자동으로 포커스
+    }
+  }, [user]);
+
+  console.log(user);
 
   /** 팬레터 보내기 버튼을 눌렀을 때 동작될 로직들 */
   const handleFanLetterSubmit = (e) => {
     e.preventDefault();
-    if (!nickname.trim() || !content.trim()) {
+    if (!content.trim()) {
       // 메시지 설정 및 모달 표시
       // Redux 액션을 디스패치하여 모달 상태 변경
-      dispatch(setModalMessage("닉네임과 내용을 모두 입력해주세요."));
-      dispatch(setModalVisibility(true));
+      dispatch(
+        openModal({
+          message: "내용을 입력해주세요.",
+          showConfirmButton: false,
+          showModal: true,
+        })
+      );
       return;
     }
 
@@ -47,34 +59,26 @@ function InputFanLetter() {
     setContent("");
 
     // 성공 메시지 설정 및 모달 표시
-    dispatch(setModalMessage("팬레터가 성공적으로 전송되었습니다."));
-    dispatch(setModalVisibility(true));
+    dispatch(
+      openModal({
+        message: "팬레터가 성공적으로 전송되었습니다.",
+        showConfirmButton: false,
+        showModal: true,
+      })
+    );
   };
 
   /** 유효성 검사를 위한 모달창 닫는 로직 */
   const handleModalClose = () => {
-    dispatch(setModalVisibility(false));
+    dispatch(closeModal());
   };
-  // 컴포넌트가 마운트될 때 입력창에 자동으로 포커스
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
 
   return (
     <>
       <FormStyle onSubmit={handleFanLetterSubmit}>
         <InputGroupStyle>
           <LabelGroupStyle>닉네임</LabelGroupStyle>
-          <NameStyle
-            placeholder="최대 20자까지"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            maxLength={20}
-            ref={inputRef}
-            type="text"
-          />
+          <p>{nickname}</p>
         </InputGroupStyle>
         <InputGroupStyle>
           <LabelGroupStyle>내용</LabelGroupStyle>
@@ -107,7 +111,7 @@ function InputFanLetter() {
       </FormStyle>
       {showModal && (
         <ValidationModal
-          message={modalMessage}
+          message={message}
           onConfirm={handleModalClose}
           onCancel={handleModalClose}
           showConfirmButton={false} // 취소 버튼 숨기기

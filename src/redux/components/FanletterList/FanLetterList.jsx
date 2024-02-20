@@ -13,7 +13,7 @@ import {
 import { ProfileIcon } from "../../../assets/ProfileIcon";
 
 function FanletterList({ selectedMember }) {
-  const fanLetters = useSelector((state) => state.fanLetters);
+  const fanLetters = useSelector((state) => state.fanletter);
   const navigate = useNavigate();
   const { memberName } = useParams(); // URL에서 멤버 이름을 받음
   // selectedMember이라는 prop이 있으면 그걸 사용, 없으면 URL의 memberName에서 가져옴

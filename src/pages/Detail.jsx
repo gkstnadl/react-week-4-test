@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FanLetterEditDelete from "../redux/components/FanletterDetail/FanLetterEditDelete";
-import { updateFanLetter, deleteFanLetter } from "../redux/modules/actions";
+import { updateFanLetter, deleteFanLetter } from "../redux/modules/fanletter";
 
 function Detail() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const fanLetters = useSelector((state) => state.fanLetters);
+  const fanLetters = useSelector((state) => state.fanletter);
   const [letter, setLetter] = useState(null);
 
   useEffect(() => {

@@ -50,6 +50,9 @@ function Login() {
 
   const handleConfirm = () => {
     dispatch(closeModal());
+    if (isSuccess) {
+      navigate("/");
+    }
   };
 
   return (
