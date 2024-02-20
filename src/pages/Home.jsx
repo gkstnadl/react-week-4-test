@@ -41,7 +41,10 @@ function Home() {
   return (
     <>
       <MemberSlider members={members} onMemberClick={handleMemberClick} />
-      <InputFanLetter />
+      <InputFanLetter
+        selectedMember={selectedMember}
+        onMemberClick={handleMemberClick}
+      />
       <FanletterList selectedMember={selectedMember} />
     </>
   );

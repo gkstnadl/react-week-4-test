@@ -17,7 +17,7 @@ import { openModal, closeModal } from "../../../redux/modules/modal";
 import { members } from "../../modules/members"; // 멤버 목록 가져오기
 import { MailIcon } from "../../../assets/MailIcon";
 
-function InputFanLetter() {
+function InputFanLetter({ onMemberClick }) {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
@@ -70,6 +70,12 @@ function InputFanLetter() {
     dispatch(closeModal());
   };
 
+  /** 모달창 닫으면서 팬레터 리스트 갱신하기 */
+  const handleModalCloseAndRefresh = () => {
+    dispatch(closeModal());
+    onMemberClick(selectedMember);
+  };
+
   return (
     <>
       <FormStyle onSubmit={handleFanLetterSubmit}>
@@ -109,7 +115,7 @@ function InputFanLetter() {
       {showModal && (
         <ValidationModal
           message={message}
-          onConfirm={handleModalClose}
+          onConfirm={handleModalCloseAndRefresh}
           onCancel={handleModalClose}
           showConfirmButton={false} // 취소 버튼 숨기기
         />

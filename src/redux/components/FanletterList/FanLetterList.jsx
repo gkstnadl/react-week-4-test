@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   ListTitleStyle,
@@ -16,6 +16,7 @@ import { members } from "../../modules/members";
 function FanletterList({ selectedMember }) {
   const fanLetters = useSelector((state) => state.fanletter);
   const navigate = useNavigate();
+  const location = useLocation();
   const { memberName } = useParams(); // URL에서 멤버 이름을 받음
   const isValidMember = members.includes(memberName);
 
@@ -23,15 +24,25 @@ function FanletterList({ selectedMember }) {
   const memberToShow = selectedMember || memberName;
   const [filteredFanLetters, setFilteredFanLetters] = useState([]);
   useEffect(() => {
-    // if (!isValidMember) {
-    //   navigate("/error");
-    // }
-    // selectedMember 또는 memberName이 변경될 때 실행
-    const lettersToShow = selectedMember
-      ? fanLetters[selectedMember] || []
-      : Object.values(fanLetters || {}).flat();
-    setFilteredFanLetters(lettersToShow);
-  }, [fanLetters, selectedMember, memberName, navigate, isValidMember]);
+    if (location.pathname !== "/" && !isValidMember) {
+      const timer = setTimeout(() => {
+        navigate("/error");
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      const lettersToShow = fanLetters.letters.filter(
+        (letter) => letter.member === memberToShow
+      );
+      setFilteredFanLetters(lettersToShow);
+    }
+  }, [
+    fanLetters,
+    selectedMember,
+    memberName,
+    navigate,
+    isValidMember,
+    location.pathname,
+  ]);
 
   /** 클릭하면 id를 기반으로 상세페이지가 열리는 로직 */
   const handleLetterClick = (id) => {
