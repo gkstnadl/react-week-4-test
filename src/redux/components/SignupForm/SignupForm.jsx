@@ -18,6 +18,7 @@ function SignupForm() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,15 +32,13 @@ function SignupForm() {
     // 이메일 유효성 검사 (4~10글자)
     if (id.length < 4 || id.length > 10) {
       dispatch(openModal({ message: "이메일은 4~10글자 사이여야 합니다." }));
-      return; // 유효성 검사 실패 시, 여기서 함수 종료
+      return;
     }
-
     // 비밀번호 유효성 검사 (4~15글자)
     if (password.length < 4 || password.length > 15) {
       dispatch(openModal({ message: "비밀번호는 4~15글자 사이여야 합니다." }));
-      return; // 유효성 검사 실패 시, 여기서 함수 종료
+      return;
     }
-
     // 닉네임 유효성 검사 (1~10글자)
     if (nickname.length < 1 || nickname.length > 10) {
       dispatch(openModal({ message: "닉네임은 1~10글자 사이여야 합니다." }));

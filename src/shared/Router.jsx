@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Main from "../pages/Main";
+import Home from "../pages/Home";
 import Detail from "../pages/Detail";
 import Login from "../redux/components/Login/Login";
 import SignupForm from "../redux/components/SignupForm/SignupForm";
@@ -19,7 +19,7 @@ const Router = () => {
           element={
             <>
               <Header />
-              <Main />
+              <Home />
             </>
           }
         />

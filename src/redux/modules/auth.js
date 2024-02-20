@@ -38,7 +38,7 @@ export const loadUser = createAsyncThunk(
 
 
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
@@ -61,27 +61,28 @@ const authSlice = createSlice({
                 state.isSuccess = true;
                 state.user = action.payload;
             })
-            .addCase(loginUser.rejected, (state, action) => {
-                state.isLoading = false;
-                state.isError = true;
-                state.isSuccess = false;
-                state.message = action.payload.message;
-                state.user = null;
-            })
+            // .addCase(loginUser.rejected, (state, action) => {
+            //     state.isLoading = false;
+            //     state.isError = true;
+            //     state.isSuccess = false;
+            //     state.message = action.payload.message;
+            //     state.user = null;
+            // })
             .addCase(loadUser.fulfilled, (state, action) => {
-                state.user = action.payload;
+                state.user = { ...action.payload };
+                console.log("스테이트의 유저", state.user);
                 state.isSuccess = true;
                 state.isError = false;
                 state.isLoading = false;
                 state.message = '';
             })
-            .addCase(loadUser.rejected, (state, action) => {
-                state.isError = true;
-                state.message = action.payload;
-                state.user = null;
-                state.isSuccess = false;
-                state.isLoading = false;
-            });
+        // .addCase(loadUser.rejected, (state, action) => {
+        //     state.isError = true;
+        //     state.message = action.payload;
+        //     state.user = null;
+        //     state.isSuccess = false;
+        //     state.isLoading = false;
+        // });
     },
 });
 
