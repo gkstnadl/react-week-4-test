@@ -13,16 +13,15 @@ import {
   LetterContentTextStyle,
 } from "./styles";
 import { updateFanLetter, deleteFanLetter } from "../../modules/fanletter";
+import { openModal, closeModal } from "../../modules/modal";
 import { ProfileIcon } from "../../../assets/ProfileIcon";
 
 function FanLetterEditDelete({ letterId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const letter = useSelector((state) => {
-    // 모든 팬레터를 배열로 변환하고, 특정 ID를 가진 팬레터를 찾는 로직
-    const allLetters = Object.values(state.fanletter).flat();
-    console.log(Object.values(state.fanletter).flat());
-    return allLetters.find((l) => l.id === letterId);
+    return state.fanletter.letters.find((letter) => letter.id === letterId);
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -53,6 +52,13 @@ function FanLetterEditDelete({ letterId }) {
       setIsEditing(true);
     } else if (actionType === "delete") {
       dispatch(deleteFanLetter(letterId));
+      dispatch(
+        openModal({
+          message: "삭제되었습니다!",
+          showConfirmButton: false,
+          showModal: true,
+        })
+      );
       navigate("/");
     }
   };
@@ -62,7 +68,14 @@ function FanLetterEditDelete({ letterId }) {
   };
 
   const handleSave = () => {
-    dispatch(updateFanLetter(letterId, editedContent));
+    dispatch(updateFanLetter({ id: letterId, content: editedContent }));
+    dispatch(
+      openModal({
+        message: "수정이 완료되었습니다!",
+        showConfirmButton: false,
+        showModal: true,
+      })
+    );
     setIsEditing(false);
   };
 
