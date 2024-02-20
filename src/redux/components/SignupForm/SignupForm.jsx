@@ -15,7 +15,7 @@ import { openModal, closeModal } from "../../modules/modal";
 import { useNavigate } from "react-router-dom";
 
 function SignupForm() {
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const dispatch = useDispatch();
@@ -28,7 +28,24 @@ function SignupForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signupUser({ nickname, id: email, password }));
+    // 이메일 유효성 검사 (4~10글자)
+    if (id.length < 4 || id.length > 10) {
+      dispatch(openModal({ message: "이메일은 4~10글자 사이여야 합니다." }));
+      return; // 유효성 검사 실패 시, 여기서 함수 종료
+    }
+
+    // 비밀번호 유효성 검사 (4~15글자)
+    if (password.length < 4 || password.length > 15) {
+      dispatch(openModal({ message: "비밀번호는 4~15글자 사이여야 합니다." }));
+      return; // 유효성 검사 실패 시, 여기서 함수 종료
+    }
+
+    // 닉네임 유효성 검사 (1~10글자)
+    if (nickname.length < 1 || nickname.length > 10) {
+      dispatch(openModal({ message: "닉네임은 1~10글자 사이여야 합니다." }));
+      return;
+    }
+    dispatch(signupUser({ nickname, id, password }));
     dispatch(openModal({ message: "회원가입이 완료되었습니다." }));
   };
 
@@ -54,17 +71,17 @@ function SignupForm() {
               id="nickname"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              placeholder="닉네임"
+              placeholder="닉네임 (1~10글자)"
               required
             ></input>
           </div>
           <div>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="이메일"
+              type="text"
+              id="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              placeholder="아이디 (4~10글자)"
               required
             ></input>
           </div>
@@ -73,7 +90,7 @@ function SignupForm() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호"
+              placeholder="비밀번호 (4~15글자)"
               required
             ></input>
           </div>

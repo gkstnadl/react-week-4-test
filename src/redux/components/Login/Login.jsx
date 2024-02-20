@@ -15,7 +15,7 @@ import { openModal, closeModal } from "../../../redux/modules/modal";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ id: email, password }))
+    dispatch(loginUser({ id, password }))
       .unwrap()
       .then(() => {
         dispatch(
@@ -63,11 +63,11 @@ function Login() {
         <SignupFormStyle onSubmit={handleSubmit}>
           <div>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="이메일"
+              type="id"
+              id="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              placeholder="아이디"
               required
             ></input>
           </div>
