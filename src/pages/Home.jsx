@@ -20,11 +20,11 @@ function Home() {
   console.log("auth", auth);
   console.log("user", user);
 
-  useEffect(() => {
-    if (!isLoading && !user) {
-      navigate("/login");
-    }
-  }, [user, isLoading, navigate]);
+  // useEffect(() => {
+  //   if (!isLoading && !user) {
+  //     navigate("/login");
+  //   }
+  // }, [user, isLoading, navigate]);
 
   if (isLoading || !user) {
     return <div>로딩중...</div>;
