@@ -52,7 +52,7 @@ function InputFanLetter() {
     }
 
     // 팬레터 추가 Redux 액션 디스패치
-    dispatch(addFanLetter(nickname, content, selectedMember));
+    dispatch(addFanLetter({ nickname, content, member: selectedMember }));
     setContent("");
 
     // 성공 메시지 설정 및 모달 표시
