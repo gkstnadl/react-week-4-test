@@ -19,18 +19,6 @@ export const LabelGroupStyle = styled.label`
   width: 100%;
 `;
 
-export const NameStyle = styled.input`
-  width: 200%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  &::placeholder {
-    text-align: left;
-    line-height: normal;
-  }
-`;
-
 export const ContentStyle = styled.textarea`
   width: 200%;
   height: 60px;
@@ -74,4 +62,8 @@ export const SubmitBtnStyle = styled.button`
   &:hover {
     background-color: #8860a5;
   }
+`;
+
+export const FormNicknameStyle = styled.p`
+  width: 200%;
 `;

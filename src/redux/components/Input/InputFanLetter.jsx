@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FormStyle,
-  NameStyle,
+  FormNicknameStyle,
   ContentStyle,
   InputGroupStyle,
   LabelGroupStyle,
@@ -35,8 +35,6 @@ function InputFanLetter() {
     }
   }, [user]);
 
-  console.log(user);
-
   /** 팬레터 보내기 버튼을 눌렀을 때 동작될 로직들 */
   const handleFanLetterSubmit = (e) => {
     e.preventDefault();
@@ -55,7 +53,6 @@ function InputFanLetter() {
 
     // 팬레터 추가 Redux 액션 디스패치
     dispatch(addFanLetter(nickname, content, selectedMember));
-    setNickname("");
     setContent("");
 
     // 성공 메시지 설정 및 모달 표시
@@ -78,7 +75,7 @@ function InputFanLetter() {
       <FormStyle onSubmit={handleFanLetterSubmit}>
         <InputGroupStyle>
           <LabelGroupStyle>닉네임</LabelGroupStyle>
-          <p>{nickname}</p>
+          <FormNicknameStyle>{nickname}</FormNicknameStyle>
         </InputGroupStyle>
         <InputGroupStyle>
           <LabelGroupStyle>내용</LabelGroupStyle>

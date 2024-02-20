@@ -9,7 +9,7 @@ const initialState = {
     message: '',
 };
 
-// 비동기 로그인 thunk
+// 로그인 thunk
 export const loginUser = createAsyncThunk(
     'users/login',
     async (loginData, thunkAPI) => {
@@ -23,6 +23,19 @@ export const loginUser = createAsyncThunk(
         }
     }
 );
+
+// 로그인 불러오기
+export const loadUser = createAsyncThunk(
+    'users/load',
+    async (loginData, thunkAPI) => {
+        const storedUserData = localStorage.getItem('user');
+        if (storedUserData) {
+            return JSON.parse(storedUserData);
+        }
+        return thunkAPI.rejectWithValue('유저 데이터가 없습니다.');
+    }
+);
+
 
 
 const authSlice = createSlice({
@@ -54,6 +67,20 @@ const authSlice = createSlice({
                 state.isSuccess = false;
                 state.message = action.payload.message;
                 state.user = null;
+            })
+            .addCase(loadUser.fulfilled, (state, action) => {
+                state.user = action.payload;
+                state.isSuccess = true;
+                state.isError = false;
+                state.isLoading = false;
+                state.message = '';
+            })
+            .addCase(loadUser.rejected, (state, action) => {
+                state.isError = true;
+                state.message = action.payload;
+                state.user = null;
+                state.isSuccess = false;
+                state.isLoading = false;
             });
     },
 });
