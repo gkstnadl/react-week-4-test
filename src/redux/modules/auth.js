@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { login, changeProfile, deleteProfile } from '../../loginApi';
+import { login, changeProfile } from '../../loginApi';
 
 const initialState = {
     user: null,
@@ -43,27 +43,13 @@ export const updateUserProfile = createAsyncThunk(
     async (userData, thunkAPI) => {
         try {
             const response = await changeProfile(userData);
-            return response;
+            const updatedUser = response.data;
+            return updatedUser;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response.data);
         }
     }
 );
-
-// API요청 가지고와서 프로필 삭제
-export const deleteUserProfile = createAsyncThunk(
-    'users/deleteProfile',
-    async (userData, thunkAPI) => {
-        try {
-            const response = await deleteProfile(userData);
-            return response;
-        } catch (error) {
-            return thunkAPI.rejectWithValue(error.response.data);
-        }
-    }
-);
-
-
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -114,6 +100,8 @@ export const authSlice = createSlice({
             })
             .addCase(updateUserProfile.fulfilled, (state, action) => {
                 state.user = { ...state.user, ...action.payload };
+                // localStorage.setItem('user', JSON.stringify({ ...state.user, ...action.payload }));
+                console.log('Profile updated:', action.payload);
             })
             .addCase(updateUserProfile.rejected, (state, action) => {
                 console.error('Profile update failed:', action.payload);

@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile, deleteUserProfile } from "../redux/modules/auth";
+import { updateUserProfile } from "../redux/modules/auth";
 import { openModal, closeModal } from "../redux/modules/modal";
 import ValidationModal from "../redux/components/Modal/ValidationModal";
 import { ProfileIcon } from "../assets/ProfileIcon";
 import {
   MypageContainerStyle,
   InputProfileStyle,
-  InputProfileDeleteStyle,
   ProfileNicknameStyle,
   ProfileTitleStyle,
   ProfileUpdateBtnStyle,
@@ -52,29 +51,6 @@ function Mypage() {
     dispatch(closeModal());
   };
 
-  const handleProfileDelete = () => {
-    dispatch(deleteUserProfile())
-      .unwrap()
-      .then(() => {
-        dispatch(
-          openModal({
-            message: "프로필이 삭제되었습니다.",
-            showConfirmButton: false,
-            showModal: true,
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(
-          openModal({
-            message: error.message,
-            showConfirmButton: false,
-            showModal: true,
-          })
-        );
-      });
-  };
-
   if (!user) {
     return <div>로딩중...</div>;
   }
@@ -89,12 +65,7 @@ function Mypage() {
       ) : (
         <ProfileIcon />
       )}
-      <div>
-        <InputProfileStyle htmlFor="profile">사진 찾아보기</InputProfileStyle>
-        <InputProfileDeleteStyle onClick={handleProfileDelete}>
-          삭제
-        </InputProfileDeleteStyle>
-      </div>
+      <InputProfileStyle htmlFor="profile">사진 찾아보기</InputProfileStyle>
       <input
         id="profile"
         type="file"

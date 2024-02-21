@@ -1,3 +1,4 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // 환경 변수로 설정시 오류가 발생
@@ -26,25 +27,28 @@ export const login = async (loginData) => {
 };
 
 // 회원정보 확인 API
-export const checkUser = async () => {
-    const userKey = localStorage.getItem('user');
-    if (userKey) {
-        const userObject = JSON.parse(userKey);
-        const accessToken = userObject.accessToken;
-        try {
-            const response = await axios.get(`${BASE_URL}/user`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                }
-            });
-            return response.data;
-        } catch (error) {
-            console.error(error.response);
-            throw error.response.data;
+export const checkUser = createAsyncThunk('users/checkUser',
+    async (_, thunkAPI) => {
+        const userKey = localStorage.getItem('user');
+        if (userKey) {
+            const userObject = JSON.parse(userKey);
+            const accessToken = userObject.accessToken;
+            try {
+                const response = await axios.get(`${BASE_URL}/user`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                    }
+                });
+                return response.data;
+            } catch (error) {
+                console.error(error.response);
+                return thunkAPI.rejectWithValue(error.response.data);
+            }
         }
     }
-};
+);
+
 
 
 // 프로필 변경 API
@@ -62,27 +66,6 @@ export const changeProfile = async (userData) => {
             const response = await axios.patch(`${BASE_URL}/profile`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-            return response.data;
-        } catch (error) {
-            console.error(error.response);
-            throw error.response.data;
-        }
-    }
-}
-
-// 프로필 삭제 API
-export const deleteProfile = async () => {
-    const userKey = localStorage.getItem('user');
-    if (userKey) {
-        const userObject = JSON.parse(userKey);
-        const accessToken = userObject.accessToken;
-        try {
-            const response = await axios.delete(`${BASE_URL}/profile/avatar`, {
-                headers: {
-                    "Content-Type": "application/json",
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
