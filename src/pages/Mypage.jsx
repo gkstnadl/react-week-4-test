@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeProfile } from "../loginApi";
-import { updateUserProfile } from "../redux/modules/auth";
+import { updateUserProfile, deleteUserProfile } from "../redux/modules/auth";
 import { openModal, closeModal } from "../redux/modules/modal";
 import ValidationModal from "../redux/components/Modal/ValidationModal";
 import { ProfileIcon } from "../assets/ProfileIcon";
 import {
   MypageContainerStyle,
   InputProfileStyle,
+  InputProfileDeleteStyle,
   ProfileNicknameStyle,
   ProfileTitleStyle,
+  ProfileUpdateBtnStyle,
 } from "./styles";
 
 function Mypage() {
@@ -51,6 +52,29 @@ function Mypage() {
     dispatch(closeModal());
   };
 
+  const handleProfileDelete = () => {
+    dispatch(deleteUserProfile())
+      .unwrap()
+      .then(() => {
+        dispatch(
+          openModal({
+            message: "프로필이 삭제되었습니다.",
+            showConfirmButton: false,
+            showModal: true,
+          })
+        );
+      })
+      .catch((error) => {
+        dispatch(
+          openModal({
+            message: error.message,
+            showConfirmButton: false,
+            showModal: true,
+          })
+        );
+      });
+  };
+
   if (!user) {
     return <div>로딩중...</div>;
   }
@@ -60,10 +84,17 @@ function Mypage() {
       <ProfileTitleStyle>마이페이지</ProfileTitleStyle>
       {imgFile ? (
         <img src={URL.createObjectURL(imgFile)} alt="profile" />
+      ) : user && user.avatar ? (
+        <img src={user.avatar} alt="profile" />
       ) : (
         <ProfileIcon />
       )}
-      <InputProfileStyle htmlFor="profile">사진 찾아보기</InputProfileStyle>
+      <div>
+        <InputProfileStyle htmlFor="profile">사진 찾아보기</InputProfileStyle>
+        <InputProfileDeleteStyle onClick={handleProfileDelete}>
+          삭제
+        </InputProfileDeleteStyle>
+      </div>
       <input
         id="profile"
         type="file"
@@ -72,7 +103,9 @@ function Mypage() {
       />
       <ProfileNicknameStyle>{user.nickname}</ProfileNicknameStyle>
       <p>{user.userId}</p>
-      <button onClick={handleProfileUpdate}>프로필 업데이트</button>
+      <ProfileUpdateBtnStyle onClick={handleProfileUpdate}>
+        프로필 업데이트
+      </ProfileUpdateBtnStyle>
       {showModal && (
         <ValidationModal
           message={message}

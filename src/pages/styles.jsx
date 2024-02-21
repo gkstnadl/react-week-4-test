@@ -24,15 +24,16 @@ export const MypageContainerStyle = styled.div`
     object-fit: cover;
     object-position: center;
   }
-  button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ac87c5;
-    color: white;
-    &:hover {
-      background-color: #9c7ab8;
-    }
+`;
+
+export const ProfileUpdateBtnStyle = styled.button`
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ac87c5;
+  color: white;
+  &:hover {
+    background-color: #9c7ab8;
   }
 `;
 
@@ -41,6 +42,19 @@ export const InputProfileStyle = styled.label`
   border: none;
   border-radius: 5px;
   background-color: #f2f2f2;
+  cursor: pointer;
+  margin-right: 10px;
+  &:hover {
+    background-color: #e5e5e5;
+  }
+`;
+
+export const InputProfileDeleteStyle = styled.button`
+  padding: 10px 20px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background-color: #ffffff;
+  font-size: 16px;
   cursor: pointer;
   &:hover {
     background-color: #e5e5e5;

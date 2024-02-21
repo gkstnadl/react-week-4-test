@@ -72,3 +72,24 @@ export const changeProfile = async (userData) => {
         }
     }
 }
+
+// 프로필 삭제 API
+export const deleteProfile = async () => {
+    const userKey = localStorage.getItem('user');
+    if (userKey) {
+        const userObject = JSON.parse(userKey);
+        const accessToken = userObject.accessToken;
+        try {
+            const response = await axios.delete(`${BASE_URL}/profile/avatar`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error.response);
+            throw error.response.data;
+        }
+    }
+}

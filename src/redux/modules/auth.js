@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { login, changeProfile } from '../../loginApi';
+import { login, changeProfile, deleteProfile } from '../../loginApi';
 
 const initialState = {
     user: null,
@@ -49,6 +49,20 @@ export const updateUserProfile = createAsyncThunk(
         }
     }
 );
+
+// API요청 가지고와서 프로필 삭제
+export const deleteUserProfile = createAsyncThunk(
+    'users/deleteProfile',
+    async (userData, thunkAPI) => {
+        try {
+            const response = await deleteProfile(userData);
+            return response;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    }
+);
+
 
 
 export const authSlice = createSlice({

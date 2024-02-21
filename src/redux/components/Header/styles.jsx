@@ -11,15 +11,18 @@ export const HeaderStyle = styled.div`
   padding: 30px;
 `;
 
-export const LogoBtn = styled.button`
+export const LogoDivStyle = styled.div`
   background-color: transparent;
   border: none;
+  display: flex;
+  justify-content: center;
 `;
 
 // 로고 이미지 스타일
 export const LogoImgStyle = styled.img`
   width: auto;
-  max-height: 100px;
+  max-height: 120px;
+  cursor: pointer;
 `;
 export const HeaderTopBtnStyle = styled.div`
   display: flex;

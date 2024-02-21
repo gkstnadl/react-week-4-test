@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   HeaderStyle,
   LogoImgStyle,
-  LogoBtn,
+  LogoDivStyle,
   MypageBtnStyle,
   LogoutBtnStyle,
   HeaderTopBtnStyle,
@@ -34,9 +34,9 @@ function Header() {
           <MypageBtnStyle onClick={goToMypage}>마이페이지</MypageBtnStyle>
           <LogoutBtnStyle onClick={handleLogout}>로그아웃</LogoutBtnStyle>
         </HeaderTopBtnStyle>
-        <LogoBtn onClick={goToHome}>
-          <LogoImgStyle src={LogoImg} alt="bts-logo" />
-        </LogoBtn>
+        <LogoDivStyle>
+          <LogoImgStyle onClick={goToHome} src={LogoImg} alt="bts-logo" />
+        </LogoDivStyle>
       </HeaderStyle>
     </header>
   );
