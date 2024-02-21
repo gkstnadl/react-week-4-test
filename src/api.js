@@ -1,6 +1,5 @@
 import axios from "axios";
 // import store from "./redux/config/configStore";
-import { logout } from "./redux/modules/auth";
 
 const api = axios.create({
     baseURL: "http://localhost:5000",

@@ -1,5 +1,88 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeProfile } from "../loginApi";
+import { updateUserProfile } from "../redux/modules/auth";
+import { openModal, closeModal } from "../redux/modules/modal";
+import ValidationModal from "../redux/components/Modal/ValidationModal";
+import { ProfileIcon } from "../assets/ProfileIcon";
+import {
+  MypageContainerStyle,
+  InputProfileStyle,
+  ProfileNicknameStyle,
+  ProfileTitleStyle,
+} from "./styles";
+
 function Mypage() {
-  return <div>Mypage</div>;
+  const dispatch = useDispatch();
+  const [imgFile, setImgFile] = useState(null);
+  const { user } = useSelector((state) => state.auth);
+  const { showModal, message } = useSelector((state) => state.modal);
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImgFile(e.target.files[0]);
+    }
+  };
+
+  const handleProfileUpdate = async () => {
+    dispatch(updateUserProfile({ imgFile, nickname: user.nickname }))
+      .unwrap()
+      .then(() => {
+        dispatch(
+          openModal({
+            message: "프로필이 업데이트되었습니다.",
+            showConfirmButton: false,
+            showModal: true,
+          })
+        );
+      })
+      .catch((error) => {
+        dispatch(
+          openModal({
+            message: error.message,
+            showConfirmButton: false,
+            showModal: true,
+          })
+        );
+      });
+  };
+
+  const handleModalClose = () => {
+    dispatch(closeModal());
+  };
+
+  if (!user) {
+    return <div>로딩중...</div>;
+  }
+
+  return (
+    <MypageContainerStyle>
+      <ProfileTitleStyle>마이페이지</ProfileTitleStyle>
+      {imgFile ? (
+        <img src={URL.createObjectURL(imgFile)} alt="profile" />
+      ) : (
+        <ProfileIcon />
+      )}
+      <InputProfileStyle htmlFor="profile">사진 찾아보기</InputProfileStyle>
+      <input
+        id="profile"
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+      />
+      <ProfileNicknameStyle>{user.nickname}</ProfileNicknameStyle>
+      <p>{user.userId}</p>
+      <button onClick={handleProfileUpdate}>프로필 업데이트</button>
+      {showModal && (
+        <ValidationModal
+          message={message}
+          onConfirm={handleModalClose}
+          onCancel={handleModalClose}
+          showConfirmButton={false}
+        />
+      )}
+    </MypageContainerStyle>
+  );
 }
 
 export default Mypage;

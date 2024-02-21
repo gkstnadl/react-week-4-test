@@ -4,6 +4,7 @@ import modal from "../modules/modal";
 import auth from "../modules/auth";
 import fanletter from "../modules/fanletter";
 
+
 const store = configureStore({
     reducer: {
         signup,

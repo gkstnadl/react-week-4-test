@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { login } from '../../loginApi';
+import { login, changeProfile } from '../../loginApi';
 
 const initialState = {
     user: null,
@@ -7,6 +7,7 @@ const initialState = {
     isSuccess: false,
     isLoading: false,
     message: '',
+    avatar: null,
 };
 
 // 로그인 thunk
@@ -24,7 +25,7 @@ export const loginUser = createAsyncThunk(
     }
 );
 
-// 로그인 불러오기
+// 유저정보 불러오기
 export const loadUser = createAsyncThunk(
     'users/load',
     async (loginData, thunkAPI) => {
@@ -36,12 +37,27 @@ export const loadUser = createAsyncThunk(
     }
 );
 
+// 프로필 업데이트
+export const updateUserProfile = createAsyncThunk(
+    'users/updateProfile',
+    async (userData, thunkAPI) => {
+        try {
+            const response = await changeProfile(userData);
+            return response;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    }
+);
 
 
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        setUser: (state, action) => {
+            state.user = action.payload;
+        },
         logout: (state) => {
             localStorage.removeItem('user');
             state.user = null;
@@ -70,7 +86,6 @@ export const authSlice = createSlice({
             })
             .addCase(loadUser.fulfilled, (state, action) => {
                 state.user = { ...action.payload };
-                console.log("스테이트의 유저", state.user);
                 state.isSuccess = true;
                 state.isError = false;
                 state.isLoading = false;
@@ -82,10 +97,16 @@ export const authSlice = createSlice({
                 state.user = null;
                 state.isSuccess = false;
                 state.isLoading = false;
+            })
+            .addCase(updateUserProfile.fulfilled, (state, action) => {
+                state.user = { ...state.user, ...action.payload };
+            })
+            .addCase(updateUserProfile.rejected, (state, action) => {
+                console.error('Profile update failed:', action.payload);
             });
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { setUser, logout } = authSlice.actions;
 
 export default authSlice.reducer;

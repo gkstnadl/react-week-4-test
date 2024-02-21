@@ -23,10 +23,10 @@ function FanLetterEditDelete({ letterId }) {
   const letter = useSelector((state) => {
     return state.fanletter.letters.find((letter) => letter.id === letterId);
   });
+  const { showModal, message } = useSelector((state) => state.modal);
 
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(letter?.content);
-  const [showModal, setShowModal] = useState(false);
   const [actionType, setActionType] = useState(null);
   const inputRef = useRef(null);
 
@@ -37,17 +37,28 @@ function FanLetterEditDelete({ letterId }) {
   }, [isEditing]);
 
   const handleEditClick = () => {
-    setShowModal(true);
+    dispatch(
+      openModal({
+        message: "수정하시겠습니까?",
+        showConfirmButton: true,
+        showModal: true,
+      })
+    );
     setActionType("edit");
   };
 
   const handleDeleteClick = () => {
-    setShowModal(true);
+    dispatch(
+      openModal({
+        message: "삭제하시겠습니까?",
+        showConfirmButton: true,
+        showModal: true,
+      })
+    );
     setActionType("delete");
   };
 
   const handleConfirm = () => {
-    setShowModal(false);
     if (actionType === "edit") {
       setIsEditing(true);
     } else if (actionType === "delete") {
@@ -60,19 +71,22 @@ function FanLetterEditDelete({ letterId }) {
         })
       );
       navigate("/");
+    } else if (actionType === "editCompleted") {
     }
+    dispatch(closeModal());
   };
 
   const handleCancel = () => {
-    setShowModal(false);
+    dispatch(closeModal());
   };
 
   const handleSave = () => {
     dispatch(updateFanLetter({ id: letterId, content: editedContent }));
+    setActionType("editCompleted");
     dispatch(
       openModal({
         message: "수정이 완료되었습니다!",
-        showConfirmButton: false,
+        showConfirmButton: true,
         showModal: true,
       })
     );
@@ -126,9 +140,7 @@ function FanLetterEditDelete({ letterId }) {
       </BtnsStyle>
       {showModal && (
         <ValidationModal
-          message={
-            actionType === "edit" ? "수정하시겠습니까?" : "삭제하시겠습니까?"
-          }
+          message={message}
           onConfirm={handleConfirm}
           onCancel={handleCancel}
         />

@@ -29,7 +29,6 @@ export const addFanLetter = createAsyncThunk(
             avatar,
             sentTime: new Date().toISOString(),
             userId,
-            color: getRandomColor(),
         });
         return response.data;
     }

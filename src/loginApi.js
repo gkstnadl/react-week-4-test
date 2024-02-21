@@ -27,18 +27,22 @@ export const login = async (loginData) => {
 
 // 회원정보 확인 API
 export const checkUser = async () => {
-    const accessToken = localStorage.getItem('accessToken');
-    try {
-        const response = await axios.get(`${BASE_URL}/user`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${accessToken}`,
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.error(error.response);
-        throw error.response.data;
+    const userKey = localStorage.getItem('user');
+    if (userKey) {
+        const userObject = JSON.parse(userKey);
+        const accessToken = userObject.accessToken;
+        try {
+            const response = await axios.get(`${BASE_URL}/user`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error.response);
+            throw error.response.data;
+        }
     }
 };
 
@@ -50,14 +54,21 @@ export const changeProfile = async (userData) => {
     // avatar와 nickname 중 하나 또는 모두 변경 가능
     formData.append("avatar", imgFile);
     formData.append("nickname", nickname);
-    const accessToken = localStorage.getItem('accessToken');
-    // 요청 시 Content-Type에 유의
-    const response = await axios.patch(`${BASE_URL}/profile`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
-        },
+    const userKey = localStorage.getItem('user');
+    if (userKey) {
+        const userObject = JSON.parse(userKey);
+        const accessToken = userObject.accessToken;
+        try {
+            const response = await axios.patch(`${BASE_URL}/profile`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error(error.response);
+            throw error.response.data;
+        }
     }
-    );
-    return response.data;
 }
