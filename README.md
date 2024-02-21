@@ -1,4 +1,4 @@
-![image](https://github.com/gkstnadl/react-week-4-test/assets/131341172/7bd71d7c-1f21-4aca-8416-27834e26d931)# 팬레터 보내기 프로젝트
+# 팬레터 보내기 프로젝트
 > BTS 멤버에게 팬레터 보내는 프로젝트입니다.
 
 ![](../header.png)
@@ -22,4 +22,3 @@ yarn
 ![image](https://github.com/gkstnadl/react-week-4-test/assets/131341172/167de854-bf75-4667-9c57-97e9042c5e92)
 ![image](https://github.com/gkstnadl/react-week-4-test/assets/131341172/6cf748ec-2281-4b97-8aea-5e8571974796)
 ![image](https://github.com/gkstnadl/react-week-4-test/assets/131341172/b66b8e46-cbd8-473b-9ef6-f6a32e68ddba)
-
