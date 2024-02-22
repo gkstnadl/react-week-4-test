@@ -11,6 +11,7 @@ import {
   ProfileTitleStyle,
   ProfileUpdateBtnStyle,
 } from "./styles";
+import Header from "../redux/components/Header/Header";
 
 function Mypage() {
   const dispatch = useDispatch();
@@ -56,36 +57,39 @@ function Mypage() {
   }
 
   return (
-    <MypageContainerStyle>
-      <ProfileTitleStyle>마이페이지</ProfileTitleStyle>
-      {imgFile ? (
-        <img src={URL.createObjectURL(imgFile)} alt="profile" />
-      ) : user && user.avatar ? (
-        <img src={user.avatar} alt="profile" />
-      ) : (
-        <ProfileIcon />
-      )}
-      <InputProfileStyle htmlFor="profile">사진 찾아보기</InputProfileStyle>
-      <input
-        id="profile"
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-      />
-      <ProfileNicknameStyle>{user.nickname}</ProfileNicknameStyle>
-      <p>{user.userId}</p>
-      <ProfileUpdateBtnStyle onClick={handleProfileUpdate}>
-        프로필 업데이트
-      </ProfileUpdateBtnStyle>
-      {showModal && (
-        <ValidationModal
-          message={message}
-          onConfirm={handleModalClose}
-          onCancel={handleModalClose}
-          showConfirmButton={false}
+    <>
+      <Header />
+      <MypageContainerStyle>
+        <ProfileTitleStyle>마이페이지</ProfileTitleStyle>
+        {imgFile ? (
+          <img src={URL.createObjectURL(imgFile)} alt="profile" />
+        ) : user && user.avatar ? (
+          <img src={user.avatar} alt="profile" />
+        ) : (
+          <ProfileIcon />
+        )}
+        <InputProfileStyle htmlFor="profile">사진 찾아보기</InputProfileStyle>
+        <input
+          id="profile"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
         />
-      )}
-    </MypageContainerStyle>
+        <ProfileNicknameStyle>{user.nickname}</ProfileNicknameStyle>
+        <p>{user.userId}</p>
+        <ProfileUpdateBtnStyle onClick={handleProfileUpdate}>
+          프로필 업데이트
+        </ProfileUpdateBtnStyle>
+        {showModal && (
+          <ValidationModal
+            message={message}
+            onConfirm={handleModalClose}
+            onCancel={handleModalClose}
+            showConfirmButton={false}
+          />
+        )}
+      </MypageContainerStyle>
+    </>
   );
 }
 

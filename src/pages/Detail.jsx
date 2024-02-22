@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FanLetterEditDelete from "../redux/components/FanletterDetail/FanLetterEditDelete";
 import { updateFanLetter, deleteFanLetter } from "../redux/modules/fanletter";
+import Header from "../redux/components/Header/Header";
 
 function Detail() {
   const { id } = useParams();
@@ -12,7 +13,7 @@ function Detail() {
   const [letter, setLetter] = useState(null);
 
   useEffect(() => {
-    // 로컬 스토리지(Redux)에서 해당하는 팬레터 데이터 로드
+    // Redux에서 해당하는 팬레터 데이터 로드
     const foundLetter = Object.values(fanLetters)
       .flat()
       .find((l) => l.id === id);
@@ -36,6 +37,7 @@ function Detail() {
 
   return (
     <div>
+      <Header />
       <FanLetterEditDelete
         // letter={letter} //prop으로 전달할 함수들
         updateFanLetter={handleUpdateFanLetter}

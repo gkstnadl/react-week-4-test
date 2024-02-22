@@ -8,7 +8,7 @@ export const HeaderStyle = styled.div`
   justify-content: flex-start;
   flex-direction: column;
   margin: 0 auto;
-  padding: 30px;
+  margin-bottom: 30px;
 `;
 
 export const LogoDivStyle = styled.div`
@@ -27,27 +27,4 @@ export const LogoImgStyle = styled.img`
 export const HeaderTopBtnStyle = styled.div`
   display: flex;
   justify-content: flex-end;
-`;
-
-export const MypageBtnStyle = styled.button`
-  border: none;
-  margin-right: 10px;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  &:hover {
-    background-color: #e2e2e2;
-  }
-`;
-
-export const LogoutBtnStyle = styled.button`
-  border: none;
-  font-size: 16px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  &:hover {
-    background-color: #e2e2e2;
-  }
 `;

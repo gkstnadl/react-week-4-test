@@ -23,8 +23,15 @@ function FanletterList({ selectedMember }) {
   // selectedMember이라는 prop이 있으면 그걸 사용, 없으면 URL의 memberName에서 가져옴
   const memberToShow = selectedMember || memberName;
   const [filteredFanLetters, setFilteredFanLetters] = useState([]);
+  const { user } = useSelector((state) => state.auth);
+  const letters = useSelector((state) => state.fanletter);
+
   useEffect(() => {
-    if (location.pathname !== "/" && !isValidMember) {
+    if (
+      location.pathname !== "/" &&
+      location.pathname !== "/login" &&
+      !isValidMember
+    ) {
       const timer = setTimeout(() => {
         navigate("/error");
       }, 2000);
@@ -50,26 +57,34 @@ function FanletterList({ selectedMember }) {
   };
 
   return (
-    <ListBodyStyle>
-      <ListTitleStyle>{memberToShow}님께 온 팬레터</ListTitleStyle>
-      {filteredFanLetters.map((letter) => (
-        <ListContentStyle
-          key={letter.id}
-          onClick={() => handleLetterClick(letter.id)}
-        >
-          <ListNameTimeStyle>
-            <LetterImgNameStyle>
-              <ProfileIcon />
-              <p>{letter.nickname}</p>
-            </LetterImgNameStyle>
-            <ListTimeStyle>
-              {new Date(letter.sentTime).toLocaleString()}
-            </ListTimeStyle>
-          </ListNameTimeStyle>
-          <LetterContentStyle>{letter.content}</LetterContentStyle>
-        </ListContentStyle>
-      ))}
-    </ListBodyStyle>
+    <>
+      <ListBodyStyle>
+        <ListTitleStyle>{memberToShow}님께 온 팬레터</ListTitleStyle>
+        {filteredFanLetters.map((letter) => (
+          <ListContentStyle
+            key={letter.id}
+            onClick={() => handleLetterClick(letter.id)}
+          >
+            <ListNameTimeStyle>
+              <LetterImgNameStyle>
+                {(
+                  <img
+                    src={user.avatar}
+                    alt="유저 프로필"
+                    style={{ width: 50, height: 50, borderRadius: "50%" }}
+                  />
+                ) || <ProfileIcon style={{ width: "50px", height: "50px" }} />}
+                <p>{letter.nickname}</p>
+              </LetterImgNameStyle>
+              <ListTimeStyle>
+                {new Date(letter.sentTime).toLocaleString()}
+              </ListTimeStyle>
+            </ListNameTimeStyle>
+            <LetterContentStyle>{letter.content}</LetterContentStyle>
+          </ListContentStyle>
+        ))}
+      </ListBodyStyle>
+    </>
   );
 }
 
