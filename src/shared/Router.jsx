@@ -11,7 +11,7 @@ import Layout from "../redux/components/Common/Layout";
 import { useSelector } from "react-redux";
 
 const Router = () => {
-  const { isSuccess, isLoading } = useSelector((state) => state.auth);
+  const { isLogin, isLoading } = useSelector((state) => state.auth);
 
   if (isLoading) {
     return <div>로딩중...</div>;
@@ -20,7 +20,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {isSuccess ? (
+        {isLogin ? (
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/detail/:id" element={<Detail />} />
@@ -33,7 +33,7 @@ const Router = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/error" element={<Error />} />
-            {/* <Route path="*" element={<Navigate replace to="/login" />} /> */}
+            <Route path="*" element={<Navigate replace to="/login" />} />
           </>
         )}
       </Routes>

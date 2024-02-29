@@ -11,7 +11,7 @@ import {
   LetterImgNameStyle,
 } from "./styles";
 import { ProfileIcon } from "../../../assets/ProfileIcon";
-import { members } from "../../modules/members";
+import { members } from "../../modules/memberSlice";
 
 function FanletterList({ selectedMember }) {
   const fanLetters = useSelector((state) => state.fanletter);
@@ -23,8 +23,8 @@ function FanletterList({ selectedMember }) {
   // selectedMember이라는 prop이 있으면 그걸 사용, 없으면 URL의 memberName에서 가져옴
   const memberToShow = selectedMember || memberName;
   const [filteredFanLetters, setFilteredFanLetters] = useState([]);
-  const { user } = useSelector((state) => state.auth);
-  const letters = useSelector((state) => state.fanletter);
+  const { avatar } = useSelector((state) => state.auth);
+  const letters = useSelector((state) => state.letter);
 
   useEffect(() => {
     if (
@@ -69,7 +69,7 @@ function FanletterList({ selectedMember }) {
               <LetterImgNameStyle>
                 {(
                   <img
-                    src={user.avatar}
+                    src={avatar}
                     alt="유저 프로필"
                     style={{ width: 50, height: 50, borderRadius: "50%" }}
                   />

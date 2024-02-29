@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import FanLetterEditDelete from "../redux/components/FanletterDetail/FanLetterEditDelete";
-import { updateFanLetter, deleteFanLetter } from "../redux/modules/fanletter";
+import { __editLetter, __deleteLetter } from "../redux/modules/fanletterSlice";
 import Header from "../redux/components/Header/Header";
 
 function Detail() {
@@ -23,11 +23,11 @@ function Detail() {
   }, [id, fanLetters]);
 
   const handleUpdateFanLetter = (id, newContent) => {
-    dispatch(updateFanLetter(id, newContent));
+    dispatch(__editLetter(id, newContent));
   };
 
   const handleDeleteFanLetter = (id) => {
-    dispatch(deleteFanLetter(id));
+    dispatch(__deleteLetter(id));
     navigate("/");
   };
 
@@ -40,8 +40,8 @@ function Detail() {
       <Header />
       <FanLetterEditDelete
         // letter={letter} //prop으로 전달할 함수들
-        updateFanLetter={handleUpdateFanLetter}
-        deleteFanLetter={handleDeleteFanLetter}
+        __editLetter={handleUpdateFanLetter}
+        __deleteLetter={handleDeleteFanLetter}
         setLetter={setLetter}
         letterId={id}
       />

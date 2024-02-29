@@ -61,6 +61,10 @@ table {
   font-family: 'Pretendard-Regular';
 }
 
+body {
+	font-family: 'Pretendard-Regular';
+}
+
   button {
     cursor: pointer;
   }

@@ -12,7 +12,7 @@ import {
   BtnsStyle,
   LetterContentTextStyle,
 } from "./styles";
-import { updateFanLetter, deleteFanLetter } from "../../modules/fanletter";
+import { __editLetter, __deleteLetter } from "../../modules/fanletterSlice";
 import { openModal, closeModal } from "../../modules/modal";
 import { ProfileIcon } from "../../../assets/ProfileIcon";
 
@@ -62,7 +62,7 @@ function FanLetterEditDelete({ letterId }) {
     if (actionType === "edit") {
       setIsEditing(true);
     } else if (actionType === "delete") {
-      dispatch(deleteFanLetter(letterId));
+      dispatch(__deleteLetter(letterId));
       dispatch(
         openModal({
           message: "삭제되었습니다!",
@@ -81,7 +81,7 @@ function FanLetterEditDelete({ letterId }) {
   };
 
   const handleSave = () => {
-    dispatch(updateFanLetter({ id: letterId, content: editedContent }));
+    dispatch(__editLetter({ id: letterId, content: editedContent }));
     setActionType("editCompleted");
     dispatch(
       openModal({

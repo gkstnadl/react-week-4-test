@@ -1,9 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import signup from "../modules/signup";
 import modal from "../modules/modal";
-import auth from "../modules/auth";
-import fanletter from "../modules/fanletter";
-
+import auth from "../modules/authSlice";
+import fanletter from "../modules/fanletterSlice";
 
 const store = configureStore({
     reducer: {

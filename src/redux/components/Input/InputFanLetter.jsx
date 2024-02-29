@@ -12,28 +12,25 @@ import {
   ButtonContainer,
 } from "./styles";
 import ValidationModal from "../Modal/ValidationModal";
-import { addFanLetter } from "../../modules/fanletter"; // Redux 액션 가져오기
+import { __addLetter } from "../../modules/fanletterSlice"; // Redux 액션 가져오기
 import { openModal, closeModal } from "../../../redux/modules/modal";
-import { members } from "../../modules/members"; // 멤버 목록 가져오기
+import { members } from "../../modules/memberSlice"; // 멤버 목록 가져오기
 import { MailIcon } from "../../../assets/MailIcon";
+import { nanoid } from "nanoid";
 
 function InputFanLetter({ onMemberClick }) {
   const dispatch = useDispatch();
-  const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const { showModal, message } = useSelector((state) => state.modal);
-  const { user } = useSelector((state) => state.auth);
+  const { avatar, nickname, userId } = useSelector((state) => state.auth);
   const [selectedMember, setSelectedMember] = useState(members[0]);
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (user && user.nickname) {
-      setNickname(user.nickname);
-    }
     if (inputRef.current) {
       inputRef.current.focus(); // 컴포넌트가 마운트될 때 입력창에 자동으로 포커스
     }
-  }, [user]);
+  }, []);
 
   /** 팬레터 보내기 버튼을 눌렀을 때 동작될 로직들 */
   const handleFanLetterSubmit = (e) => {
@@ -51,8 +48,18 @@ function InputFanLetter({ onMemberClick }) {
       return;
     }
 
+    const newLetter = {
+      id: nanoid(),
+      nickname,
+      content,
+      avatar,
+      writedTo: selectedMember,
+      createdAt: Date.now(),
+      userId,
+    };
+
     // 팬레터 추가 Redux 액션 디스패치
-    dispatch(addFanLetter({ nickname, content, member: selectedMember }));
+    dispatch(__addLetter(newLetter));
     setContent("");
 
     // 성공 메시지 설정 및 모달 표시

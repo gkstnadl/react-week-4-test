@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile } from "../redux/modules/auth";
+import { __editProfile } from "../redux/modules/authSlice";
 import { openModal, closeModal } from "../redux/modules/modal";
 import ValidationModal from "../redux/components/Modal/ValidationModal";
 import { ProfileIcon } from "../assets/ProfileIcon";
@@ -16,7 +16,9 @@ import Header from "../redux/components/Header/Header";
 function Mypage() {
   const dispatch = useDispatch();
   const [imgFile, setImgFile] = useState(null);
-  const { user } = useSelector((state) => state.auth);
+  const { userId, isLogin, avatar, nickname } = useSelector(
+    (state) => state.auth
+  );
   const { showModal, message } = useSelector((state) => state.modal);
 
   const handleImageChange = (e) => {
@@ -26,7 +28,7 @@ function Mypage() {
   };
 
   const handleProfileUpdate = async () => {
-    dispatch(updateUserProfile({ imgFile, nickname: user.nickname }))
+    dispatch(__editProfile({ imgFile, nickname }))
       .unwrap()
       .then(() => {
         dispatch(
@@ -52,7 +54,7 @@ function Mypage() {
     dispatch(closeModal());
   };
 
-  if (!user) {
+  if (!isLogin) {
     return <div>로딩중...</div>;
   }
 
@@ -63,8 +65,8 @@ function Mypage() {
         <ProfileTitleStyle>마이페이지</ProfileTitleStyle>
         {imgFile ? (
           <img src={URL.createObjectURL(imgFile)} alt="profile" />
-        ) : user && user.avatar ? (
-          <img src={user.avatar} alt="profile" />
+        ) : avatar ? (
+          <img src={avatar} alt="profile" />
         ) : (
           <ProfileIcon />
         )}
@@ -75,8 +77,8 @@ function Mypage() {
           accept="image/*"
           onChange={handleImageChange}
         />
-        <ProfileNicknameStyle>{user.nickname}</ProfileNicknameStyle>
-        <p>{user.userId}</p>
+        <ProfileNicknameStyle>{nickname}</ProfileNicknameStyle>
+        <p>{userId}</p>
         <ProfileUpdateBtnStyle onClick={handleProfileUpdate}>
           프로필 업데이트
         </ProfileUpdateBtnStyle>

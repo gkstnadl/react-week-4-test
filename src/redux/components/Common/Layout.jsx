@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { logout } from "../../modules/auth";
+import { logout } from "../../modules/authSlice";
 import { ContainerStyle, MypageBtnStyle, LogoutBtnStyle } from "./styles";
 
 function Layout() {

@@ -1,36 +1,58 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import { logout } from "./redux/modules/authSlice";
 // import store from "./redux/config/configStore";
 
-const api = axios.create({
+export const authApi = axios.create({
+    baseURL: "https://moneyfulpublicpolicy.co.kr",
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
+export const jsonApi = axios.create({
     baseURL: "http://localhost:5000",
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 
-// 요청 인터셉터
-api.interceptors.request.use(
+authApi.interceptors.request.use(
     (config) => {
+        // 헤더에 토큰 넣기
         const accessToken = localStorage.getItem("accessToken");
         if (accessToken) {
-            config.headers.Authorization = `Bearer ${accessToken}`;
+            config.headers["Authorization"] = `Bearer ${accessToken}`;
         }
         return config;
     },
-    error => {
-        return Promise.reject(error);
+    (err) => {
+        return Promise.reject(err);
     }
 );
 
-// 응답 인터셉터 스토어와 상호 의존성이 있어서 주석처리함
-// api.interceptors.response.use(
-//     (response) => {
-//         return response;
-//     },
-//     (error) => {
-//         const { status } = error.response;
-//         if (status === 401) {
-//             store.dispatch(logout());
-//         }
-//         return Promise.reject(error);
-//     }
-// );
+authApi.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    (err) => {
+        toast.error(err.response.data.message);
+        if (
+            err.response.data.message ===
+            "토큰이 만료되었습니다. 다시 로그인 해주세요."
+        ) {
+            // 로그아웃처리 스토어 오류나서 실패
+            return;
+        }
+        return Promise.reject(err);
+    }
+);
 
-export default api;
+jsonApi.interceptors.request.use(
+    async (config) => {
+        const { data } = await authApi.get("/fanletters");
+        if (data.success) return config;
+    },
+    (err) => {
+        return Promise.reject(err);
+    }
+);

@@ -9,7 +9,7 @@ import {
 } from "../SignupForm/styles";
 import LogoImg from "../../../assets/bts-logo.png";
 import { LogoImgStyle } from "../Header/styles";
-import { loginUser } from "../../../redux/modules/auth";
+import { __login } from "../../modules/authSlice";
 import ValidationModal from "../Modal/ValidationModal";
 import { openModal, closeModal } from "../../../redux/modules/modal";
 import { useNavigate } from "react-router-dom";
@@ -17,40 +17,24 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoginMode, setIsLoginMode] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Redux에서 로그인 상태 가져오기
-  const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
+  const { isLogin, isError, message } = useSelector((state) => state.auth);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginUser({ id, password }))
-      .unwrap()
-      .then(() => {
-        dispatch(
-          openModal({
-            message: "로그인 성공!",
-            showConfirmButton: true,
-          })
-        );
-      })
-      .catch((err) => {
-        console.log("로그인 실패", err);
-        dispatch(
-          openModal({
-            message: err.message,
-            showConfirmButton: true,
-          })
-        );
-      });
+    if (isLoginMode) {
+      dispatch(__login({ id, password }));
+      navigate("/");
+    }
   };
 
   const handleConfirm = () => {
     dispatch(closeModal());
-    if (isSuccess) {
+    if (isLogin) {
       navigate("/");
     }
   };
@@ -85,7 +69,7 @@ function Login() {
           <span>아이디가 없다면?</span>
           <LoginLinkStyle to="/signup">회원가입</LoginLinkStyle>
         </SignupFormStyle>
-        {isSuccess && (
+        {isLogin && (
           <ValidationModal
             onConfirm={handleConfirm}
             message={message}
